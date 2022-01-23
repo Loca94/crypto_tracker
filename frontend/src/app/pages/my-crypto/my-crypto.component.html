@@ -1,0 +1,44 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div *ngIf="!loading" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="py-6 md:py-10">
+    <div class="flex justify-between mb-4">
+      <h1 class="text-3xl font-bold text-gray-800">
+        Le mie cryptovalute
+      </h1>
+      <div class="relative inline-block text-left">
+        <div>
+          <button (click)="showCoinsDropdown = !showCoinsDropdown" type="button" class="inline-flex justify-center w-full rounded-md shadow-sm px-4 py-2 bg-indigo-600 text-sm font-medium text-white hover:bg-indigo-700" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            Aggiungi
+            <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <div @dropdownAnimation *ngIf="showCoinsDropdown" class="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none max-h-72 overflow-hidden overflow-y-auto" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+            <button (click)="addCoinToWatchList(coin)" type="button" *ngFor="let coin of coinList; let i = index" class="w-full text-left text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 transition duration-75 ease-in-out" role="menuitem" tabindex="-1" [attr.id]="'menu-item-'+ i">
+              {{ coin.name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Crypto Cards -->
+    <section class="mt-8 pb-16">
+      <ul role="list" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
+
+        <!-- Card -->
+        <li class="relative" *ngFor="let coin of coinsInWatchList; trackBy: trackCoinId">
+          <app-my-crypto-card [coin]="coin" (removeCoinFromWatchList)="removeCoinFromWatchList($event)"></app-my-crypto-card>
+        </li>
+
+        <!-- More cards... -->
+      </ul>
+    </section>
+
+
+  </div>
+</div>

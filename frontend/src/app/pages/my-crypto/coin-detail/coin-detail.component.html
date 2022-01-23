@@ -1,0 +1,10 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="border border-gray-300 shadow-sm rounded-md mt-6 md:mt-10 p-2 bg-gray-50">
+    <div class="w-full flex flex-row-reverse font-medium text-sm mb-4">
+      <button (click)="changeGraphVisualization('30d')" class="p-2 mr-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-indigo-50 transition duration-75 ease-in-out">30d</button>
+      <button (click)="changeGraphVisualization('7d')" class="p-2 mr-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-indigo-50 transition duration-75 ease-in-out">7d</button>
+      <button (click)="changeGraphVisualization('24h')" class="p-2 mr-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-indigo-50 transition duration-75 ease-in-out">24h</button>
+    </div>
+    <canvas #canvas id="cryptoChart" width="800" height="400"></canvas>
+  </div>
+</div>
