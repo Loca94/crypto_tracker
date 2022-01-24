@@ -14,21 +14,21 @@ model User {
   id              Int @id @default(autoincrement())
   email           String @unique
   password        String
-  cryptoMonitored CryptoMonitored[]
+  coinMonitored   CoinMonitored[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
 
-model CryptoMonitored {
+model CoinMonitored {
   id          Int @id @default(autoincrement())
-  cryptoId    String
+  coinId      String
   name        String
   symbol      String
   alias       String
   targetPrice Float
   userId      Int
   user        User @relation(fields: [userId], references: [id])
-  tags        TagsOfCryptoMonitored[]
+  tags        TagsOfCoinMonitored[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -36,16 +36,16 @@ model CryptoMonitored {
 model Tag {
   id          Int @id @default(autoincrement())
   name        String @unique
-  cryptos     TagsOfCryptoMonitored[]
+  coins       TagsOfCoinMonitored[]
   createdAt   DateTime @default(now())
 }
 
-model TagsOfCryptoMonitored {
+model TagsOfCoinMonitored {
   id          Int @id @default(autoincrement())
   tag         Tag @relation(fields: [tagId], references: [id])
   tagId       Int
-  crypto      CryptoMonitored @relation(fields: [cryptoId], references: [id])
-  cryptoId    Int
+  coinMonitored CoinMonitored @relation(fields: [coinId], references: [id])
+  coinId      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
