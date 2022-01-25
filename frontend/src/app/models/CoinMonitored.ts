@@ -1,6 +1,5 @@
 import {User} from "./User";
 import {Tag} from "./Tag";
-import {TagsOfCoinMonitored} from "./TagsOfCoinMonitored";
 
 export class CoinMonitored {
   id: number;
@@ -11,7 +10,7 @@ export class CoinMonitored {
   targetPrice: number;
   userId: number;
   user: User;
-  tags: TagsOfCoinMonitored[];
+  tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
 }

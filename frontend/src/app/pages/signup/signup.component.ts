@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
       // TODO: fare chiamata api auth/signup, passando email e password
       
       let user: User = {
-        id: null,
+        id: 1,
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
         cognitoUserId: 'something',

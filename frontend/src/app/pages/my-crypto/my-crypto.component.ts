@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {CryptoGeckoService} from "../../core/services/crypto-gecko.service";
 import {Coin} from "../../models/Coin";
 import {DropdownAnimation} from "../../shared/animations/dropdown.animation";
+import {CoinMonitoringService} from "../../core/services/coin-monitoring.service";
+import {SubjectService} from "../../core/services/subject.service";
+import {CoinMonitored} from "../../models/CoinMonitored";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-crypto',
@@ -12,27 +16,42 @@ import {DropdownAnimation} from "../../shared/animations/dropdown.animation";
   ]
 })
 export class MyCryptoComponent implements OnInit {
-  coinList: Coin[];
-  coinsInWatchList: Coin[] = [];
-  showCoinsDropdown: boolean = false;
+  coinsInWatchList: CoinMonitored[] = [];
+  p: number = 1;
+  userId: number;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    public subjectService: SubjectService,
+    private coinMonitoringService: CoinMonitoringService
+  ) { }
 
   ngOnInit(): void {
+    this.subjectService.getUser().subscribe(user => {
+      if (user) {
+        this.userId = user.id;
+        this.getCoinsInWatchlist();
+      } else {
+        // TODO: sarebbe da usare delle guardie. vediamo se ho tempo di implementarle
+        this.router.navigate(['/login']);
+      }
+    });
   }
   
-  addCoinToWatchList(coin: Coin): void {
-    this.showCoinsDropdown = false;
-    this.coinsInWatchList.push(coin);
-    
-    console.log(this.coinsInWatchList);
-    
-    // TODO: gestire la casisitica di coin già selezionate dall'utente. come le filtro? Con delle pipes??
+  private getCoinsInWatchlist() {
+    this.coinMonitoringService.getAllCoinsUserIsMonitoring(this.userId).subscribe(coins => {
+      this.coinsInWatchList = coins;
+    });
   }
   
-  removeCoinFromWatchList(coin: Coin): void {
-    this.coinsInWatchList = this.coinsInWatchList.filter(c => c.id !== coin.id);
-    
+  goToCoinDetailPage(coin: CoinMonitored) {
+    this.router.navigate(
+      ['/my-crypto/coin-detail'],
+      { queryParams: { coinId: coin.coinId } }
+    );
+  }
+  
+  removeCoinFromWatchList(coin: CoinMonitored): void {
     // TODO: chiamta api che elimina il coin dalla lista dei coin in osservazione
   }
   

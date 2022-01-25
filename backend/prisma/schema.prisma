@@ -14,7 +14,7 @@ model User {
   id              Int @id @default(autoincrement())
   email           String @unique
   password        String
-  cognitoUserId   String @unique
+  // cognitoUserId   String @unique TODO: to decomment in the future
   coinMonitored   CoinMonitored[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

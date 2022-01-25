@@ -5,45 +5,72 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 router.get('/get-all/:userId', async (req, res) => {
-  const userId = res.params.userId;
+  console.log(req.params)
+  const userId = req.params.userId;
 
-  prisma.post
-    .findMany({
-      where: {
-        userId: Number(userId),
-      },
-    })
-    .then(coinsInWatchlist => {
-      res.json(coinsInWatchlist);
-    })
-    .catch(err => {
-      res.json(err);
-    });
+  prisma.coinMonitored.findMany({
+    where: {
+      userId: Number(userId),
+    },
+  })
+  .then(coinsInWatchlist => {
+    res.json(coinsInWatchlist);
+  })
+  .catch(err => {
+    res.json(err);
+  });
 });
 
 
+router.get('/get-one/:coinId', async (req, res) => {
+  const coinId = req.params.coinId;
+
+  prisma.coinMonitored.findOne({
+    where: {
+      id: Number(coinId),
+    },
+  })
+  .then(coinInWatchlist => {
+    res.json(coinInWatchlist);
+  })
+  .catch(err => {
+    res.json(err);
+  });
+});
+
 router.post('/add', async (req, res) => {
-  const { userId, coinMonitored } = req.body;
+  const { userId, coin } = req.body;
+
+  // https://stackoverflow.com/questions/65587200/updating-a-many-to-many-relationship-in-prisma
 
   await prisma.coinMonitored.create({
     data: {
-      coinId: coinMonitored.coinId,
-      name: coinMonitored.name,
-      symbol: coinMonitored.symbol,
-      alias: coinMonitored.alias,
-      targetPrice: coinMonitored.targetPrice,
-      userId: Number(userId),
+      coinId: coin.id,
+      name: coin.name,
+      symbol: coin.symbol,
+      alias: coin.alias,
+      targetPrice: coin.targetPrice,
+      user: {
+        connect: {
+          id: Number(userId)
+        }
+      },
       tags: {
-        create: coinMonitored.tags.map(tag => {
+        connectOrCreate: coin.tags.map(tag => {
           return {
-            name: tag.name,
+            create: {
+              name: tag.toLowerCase(),
+            },
+            where: {
+              name: tag.toLowerCase(),
+            },
           };
         }),
       }
     },
   })
   .then(coinMonitored => {
-    // TODO: this coin returned to fronted must be added to the view
+    // Returns the instance just created
     res.json(coinMonitored);
   })
   .catch(err => {

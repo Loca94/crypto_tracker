@@ -22,7 +22,6 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <button *ngIf="subjectService.getUser() | async" (click)="openModalAddCoin(coin)" type="button" class="mt-8 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
-                <!-- Heroicon name: solid/mail -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4m-2-2v4" />
@@ -42,4 +41,4 @@
   </div>
 </div>
 
-<app-modal *ngIf="openModal" (close)="openModal = false" (confirmInsertedInputs)="addCoinToWatchlist($event)"></app-modal>
+<app-modal [(showModal)]="showModal" (close)="showModal = false" (confirmInsertedInputs)="addCoinToWatchlist($event)"></app-modal>

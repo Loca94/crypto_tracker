@@ -14,7 +14,6 @@ import { MyCryptoComponent } from './pages/my-crypto/my-crypto.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { CoinDetailComponent } from './pages/my-crypto/coin-detail/coin-detail.component';
-import { MyCryptoCardComponent } from './shared/components/my-crypto-card/my-crypto-card.component';
 import { HistoryChartComponent } from './shared/components/history-chart/history-chart.component';
 import { NgChartsModule } from "ng2-charts";
 import {NgxPaginationModule} from "ngx-pagination";
@@ -31,7 +30,6 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     MyCryptoComponent,
     LoadingSpinnerComponent,
     CoinDetailComponent,
-    MyCryptoCardComponent,
     HistoryChartComponent,
     ModalComponent,
   ],

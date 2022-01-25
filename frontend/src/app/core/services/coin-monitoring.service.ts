@@ -11,10 +11,10 @@ export class CoinMonitoringService {
 
   constructor(private http: HttpClient) { }
   
-  addCoinToWatchlist(userId: number, coin: CoinMonitored): Observable<CoinMonitored> {
+  addCoinToWatchlist(userId: number, coin: Coin): Observable<CoinMonitored> {
     let data = {
       userId: userId,
-      coinMonitored: coin
+      coin
     };
     
     return this.http.post<CoinMonitored>(`/api/crypto-monitored/add`, data);
@@ -28,7 +28,7 @@ export class CoinMonitoringService {
     return this.http.post<CoinMonitored>(`/api/crypto-monitored/remove`, data);
   }
   
-  getAllConsUserIsMonitoring(userId: number): Observable<CoinMonitored[]> {
+  getAllCoinsUserIsMonitoring(userId: number): Observable<CoinMonitored[]> {
     return this.http.get<CoinMonitored[]>(`/api/crypto-monitored/get-all/${userId}`);
   }
   

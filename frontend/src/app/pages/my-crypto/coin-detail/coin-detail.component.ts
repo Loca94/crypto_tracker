@@ -5,6 +5,9 @@ import {Chart} from "chart.js";
 import {CoinHistory} from "../../../models/CoinHistory";
 import 'chartjs-adapter-date-fns';
 import {ActivatedRoute, Router} from "@angular/router";
+import {SubjectService} from "../../../core/services/subject.service";
+import {CoinMonitoringService} from "../../../core/services/coin-monitoring.service";
+import {CoinMonitored} from "../../../models/CoinMonitored";
 
 
 @Component({
@@ -16,8 +19,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CoinDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') canvas: ElementRef;
   chart: Chart;
+  selectedHistoryVisualization: '24h' | '7d' | '30d' = '24h';
   loading: boolean = true;
   coinDetails: any;
+  coinMonitored: CoinMonitored;
   private coinId: string;
   private lastDayData: any;
   private lastWeekData: any;
@@ -25,6 +30,8 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
 
 
   constructor(
+    private subjectService: SubjectService,
+    private coinMonitoringService: CoinMonitoringService,
     private cryptoGeckoService: CryptoGeckoService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -52,15 +59,17 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/']);
   }
   
-  private fetchCoinData() {
+  private async fetchCoinData() {
     forkJoin({
       lastDay: this.cryptoGeckoService.getCoinHistory(this.coinId, '1'),
       lastWeek: this.cryptoGeckoService.getCoinHistory(this.coinId, '7'),
       lastMonth: this.cryptoGeckoService.getCoinHistory(this.coinId, '30'),
-      coinDetails: this.cryptoGeckoService.getCoinDetails(this.coinId)
-    }).subscribe(({lastDay, lastWeek, lastMonth, coinDetails}) => {
+      coinDetails: this.cryptoGeckoService.getCoinDetails(this.coinId),
+      coinMonitored: this.subjectService.getMonitoredCoinByName(this.coinId)
+    }).subscribe(({lastDay, lastWeek, lastMonth, coinDetails, coinMonitored}) => {
       this.loading = false;
       this.coinDetails = coinDetails;
+      this.coinMonitored = coinMonitored;
       this.initChart(
         CoinHistory.formatPricesForChart(lastDay),
         CoinHistory.formatPricesForChart(lastWeek),
@@ -107,13 +116,15 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
     });
   }
   
-  changeGraphVisualization(historyRange: string): void {
+  changeGraphVisualization(historyRange: '24h' | '7d' | '30d'): void {
+    this.selectedHistoryVisualization = historyRange;
     this.chart.data.datasets[0].data = this.getDataBasedOnSelectedHistoryRange(historyRange);
+    this.chart.data.datasets[0].label = 'last ' + historyRange;
     this.chart.update();
   }
   
   
-  getDataBasedOnSelectedHistoryRange(historyRange: string): any {
+  getDataBasedOnSelectedHistoryRange(historyRange: '24h' | '7d' | '30d'): any {
     switch (historyRange) {
       case '24h':
         return this.lastDayData;
