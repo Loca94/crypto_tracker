@@ -1,1 +1,45 @@
-siamo nell'homepage
+<div class="relative bg-gray-50 py-12 sm:py-24 lg:py-32">
+  <div class="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+    <h2 class="text-base font-semibold tracking-wider text-indigo-600 uppercase">Crypto tracker</h2>
+    <p class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+      Welcome!
+    </p>
+    <p class="mt-5 max-w-prose mx-auto text-xl text-gray-500">
+      Create an account to start tracking your favourite cryptocurrencies.
+    </p>
+    <div class="my-8 space-x-4">
+      <a routerLink="/signup" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Get started</a>
+    </div>
+    <div *ngIf="coinList && coinList.length > 0" class="mt-16">
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Coin card -->
+        <div *ngFor="let coin of coinList | paginate: { itemsPerPage: 6, currentPage: p }" class="pt-6">
+          <div class="flow-root bg-white shadow-sm hover:shadow-md border border-gray-200 rounded-lg px-6 pb-8 transition duration-150 ease-in-out">
+            <div>
+              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight truncate">{{ coin.name }}</h3>
+              <p class="mt-5 text-base text-gray-500">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+              <button *ngIf="subjectService.getUser() | async" (click)="openModalAddCoin(coin)" type="button" class="mt-8 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                <!-- Heroicon name: solid/mail -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4m-2-2v4" />
+                </svg>
+                Add to watchlist
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-16">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal *ngIf="openModal" (close)="openModal = false" (confirmInsertedInputs)="addCoinToWatchlist($event)"></app-modal>

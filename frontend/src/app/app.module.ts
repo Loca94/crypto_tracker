@@ -17,6 +17,8 @@ import { CoinDetailComponent } from './pages/my-crypto/coin-detail/coin-detail.c
 import { MyCryptoCardComponent } from './shared/components/my-crypto-card/my-crypto-card.component';
 import { HistoryChartComponent } from './shared/components/history-chart/history-chart.component';
 import { NgChartsModule } from "ng2-charts";
+import {NgxPaginationModule} from "ngx-pagination";
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { NgChartsModule } from "ng2-charts";
     CoinDetailComponent,
     MyCryptoCardComponent,
     HistoryChartComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { NgChartsModule } from "ng2-charts";
     FormsModule,
     BrowserAnimationsModule,
     NgChartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

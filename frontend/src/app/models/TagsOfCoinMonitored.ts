@@ -6,7 +6,7 @@ export class TagsOfCoinMonitored {
   tag: Tag;
   tagId: number
   coinMonitored: CoinMonitored;
-  coinId: number
+  coinMonitoredId: number
   createdAt: Date;
   updatedAt: Date;
 }

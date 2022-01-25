@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {SubjectService} from "../../core/services/subject.service";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-signup',
@@ -9,7 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private subjectService: SubjectService) { }
 
   signupForm = new FormGroup({
     email: new FormControl('', Validators.nullValidator && Validators.required),
@@ -21,9 +23,23 @@ export class SignupComponent implements OnInit {
   }
   
   onSubmit(): void {
-    console.log(this.signupForm.value);
     if (this.signupForm.valid && this.passwordsMatch()) {
       console.log('Form is valid');
+      
+      // TODO: fare chiamata api auth/signup, passando email e password
+      
+      let user: User = {
+        id: null,
+        email: this.signupForm.value.email,
+        password: this.signupForm.value.password,
+        cognitoUserId: 'something',
+        coinMonitored: [],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      this.subjectService.setUser(user);
+      console.log('ho settato lo user nel service')
     } else {
       console.log('Form is invalid');
     }

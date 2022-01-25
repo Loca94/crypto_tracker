@@ -11,22 +11,22 @@
           <a routerLink="/home" class="text-base font-medium text-white hover:text-indigo-50">
             Homepage
           </a>
-          <a routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
-            Le mie crypto
+          <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
+            My crypto
           </a>
         </div>
       </div>
       <div class="ml-10 space-x-4">
-        <a routerLink="/login" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Accedi</a>
-        <a routerLink="/signup" class="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-indigo-600 hover:bg-indigo-50">Registrati</a>
+        <a routerLink="/login" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Login</a>
+        <a routerLink="/signup" class="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-indigo-600 hover:bg-indigo-50">Signup</a>
       </div>
     </div>
     <div class="py-4 flex flex-wrap justify-center space-x-6 lg:hidden">
       <a routerLink="/home" class="text-base font-medium text-white hover:text-indigo-50">
         Homepage
       </a>
-      <a routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
-        Le mie crypto
+      <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
+        My crypto
       </a>
     </div>
   </nav>

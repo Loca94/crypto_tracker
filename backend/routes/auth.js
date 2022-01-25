@@ -13,7 +13,7 @@ const cognitoPoolCredentials = {
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(cognitoPoolCredentials);
 
 
-router.post('/auth/signup', (req, res) => {
+router.post('/register', (req, res) => {
   const { email, password, confirmPassword } = req.body;
 
   if (password !== confirmPassword) {
@@ -27,7 +27,7 @@ router.post('/auth/signup', (req, res) => {
     };
     const emailAttribute = new AmazonCognitoIdentity.CognitoUserAttribute(emailData);
 
-    userPool.signUp(email, password, [emailAttribute], null, (err, result) => {
+    userPool.signUp(email, password, [emailAttribute], null, async (err, result) => {
       if (err) {
         console.log(err);
         res.json({
@@ -37,6 +37,12 @@ router.post('/auth/signup', (req, res) => {
         console.log(result);
 
         // TODO: qui dobbiamo salvare l'utente nel database SQLite
+        await prisma.user.create({
+          data: {
+            email: email,
+            password: password
+          }
+        });
 
         res.json({
           message: 'User created'

@@ -12,12 +12,11 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
-  addUser(user: User) {
-    console.log(user);
-    return this.http.post('api/users', user);
-  }
-
   login(value: any): Observable<any> {
     return this.http.post('api/login', value);
+  }
+  
+  register(value: any): Observable<any> {
+    return this.http.post('api/register', value);
   }
 }

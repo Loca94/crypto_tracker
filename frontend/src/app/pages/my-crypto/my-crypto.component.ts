@@ -15,21 +15,10 @@ export class MyCryptoComponent implements OnInit {
   coinList: Coin[];
   coinsInWatchList: Coin[] = [];
   showCoinsDropdown: boolean = false;
-  loading: boolean = true;
 
-  constructor(
-    private cryptoGeckoService: CryptoGeckoService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.loading = false;
-    
-    this.cryptoGeckoService.getCoinList().subscribe(
-      (data: Coin[]) => {
-        this.coinList = data;
-        this.loading = false;
-      }
-    );
   }
   
   addCoinToWatchList(coin: Coin): void {
