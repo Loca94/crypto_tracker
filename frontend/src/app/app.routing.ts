@@ -6,6 +6,7 @@ import {SignupComponent} from "./pages/signup/signup.component";
 import {MyCryptoComponent} from "./pages/my-crypto/my-crypto.component";
 import {Coin} from "./models/Coin";
 import {CoinDetailComponent} from "./pages/my-crypto/coin-detail/coin-detail.component";
+import {AuthGuard} from "./core/guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -19,11 +20,13 @@ const routes: Routes = [
   },
   {
     path: 'my-crypto',
-    component: MyCryptoComponent
+    component: MyCryptoComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-crypto/coin-detail',
-    component: CoinDetailComponent
+    component: CoinDetailComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'login',

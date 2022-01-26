@@ -5,7 +5,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 router.get('/get-all/:userId', async (req, res) => {
-  console.log(req.params)
   const userId = req.params.userId;
 
   prisma.coinMonitored.findMany({
@@ -40,8 +39,6 @@ router.get('/get-one/:coinId', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   const { userId, coin } = req.body;
-
-  // https://stackoverflow.com/questions/65587200/updating-a-many-to-many-relationship-in-prisma
 
   await prisma.coinMonitored.create({
     data: {
@@ -80,7 +77,7 @@ router.post('/add', async (req, res) => {
 });
 
 
-router.post('/delete', async (req, res) => {
+router.post('/remove', async (req, res) => {
   const { coinId } = req.body;
 
   try {
@@ -89,14 +86,6 @@ router.post('/delete', async (req, res) => {
       .delete({
         where: {
           id: coinId,
-        },
-      });
-
-    // Delete from table TagsOfCoinMonitored
-    await prisma.tagsOfCoinMonitored
-      .deleteMany({
-        where: {
-          cryptoId: coinId,
         },
       });
   } catch (err) {

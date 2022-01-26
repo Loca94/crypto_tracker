@@ -43,7 +43,7 @@ export class HomepageComponent implements OnInit {
         
         if (this.user) {
           // User is logged in and we need to filter the coin list removing the coins the user has already added to his watchlist
-          this.coinList = this.removeElementsFromList(data, this.user.coinMonitored);
+          this.coinList = this.removeElementsFromList(data, this.user.monitoredCoins);
         } else {
           this.coinList = data;
         }
@@ -79,7 +79,8 @@ export class HomepageComponent implements OnInit {
         if (user) {
           this.coinMonitoringService.addCoinToWatchlist(user.id, this.selectedCoinToAddInWatchlist).subscribe(
             (data: CoinMonitored) => {
-              user.coinMonitored.push(data);
+              user.monitoredCoins.push(data);
+              this.subjectService.setUser(user); // updating the user in the service so that the data is updated in the component
               this.showModal = false;
             }
           );

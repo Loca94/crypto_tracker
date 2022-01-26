@@ -12,10 +12,10 @@ datasource db {
 
 model User {
   id              Int @id @default(autoincrement())
+  username        String
   email           String @unique
-  password        String
-  // cognitoUserId   String @unique TODO: to decomment in the future
-  coinMonitored   CoinMonitored[]
+  cognitoUserId   String? @unique
+  monitoredCoins  CoinMonitored[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

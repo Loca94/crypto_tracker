@@ -19,6 +19,6 @@ export class SubjectService {
   }
   
   async getMonitoredCoinByName(coinName: string): Promise<CoinMonitored> {
-    return this.userSubject.getValue().coinMonitored.find(coin => coin.name === coinName);
+    return this.userSubject.getValue().monitoredCoins.find(coin => coin.name === coinName);
   }
 }

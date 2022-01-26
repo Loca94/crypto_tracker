@@ -7,6 +7,3 @@ npx prisma migrate dev
 se si vogliono vedere i record nel database, inserire il seguente comando
 pmx prisma studio
 
-
-[//]: # ( Language: Markdown
-[//]: # ( Path: backend/src/resolvers/index.js

@@ -30,7 +30,7 @@ export class MyCryptoComponent implements OnInit {
     this.subjectService.getUser().subscribe(user => {
       if (user) {
         this.userId = user.id;
-        this.getCoinsInWatchlist();
+        this.updateCoinsInWatchlist();
       } else {
         // TODO: sarebbe da usare delle guardie. vediamo se ho tempo di implementarle
         this.router.navigate(['/login']);
@@ -38,7 +38,7 @@ export class MyCryptoComponent implements OnInit {
     });
   }
   
-  private getCoinsInWatchlist() {
+  private updateCoinsInWatchlist() {
     this.coinMonitoringService.getAllCoinsUserIsMonitoring(this.userId).subscribe(coins => {
       this.coinsInWatchList = coins;
     });
@@ -52,7 +52,9 @@ export class MyCryptoComponent implements OnInit {
   }
   
   removeCoinFromWatchList(coin: CoinMonitored): void {
-    // TODO: chiamta api che elimina il coin dalla lista dei coin in osservazione
+    this.coinMonitoringService.removeCoinFromWatchlist(coin.id).subscribe(() => {
+      this.updateCoinsInWatchlist();
+    });
   }
   
   trackCoinId(index: number, coin: Coin) {
