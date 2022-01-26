@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'my-crypto/coin-detail',
     component: CoinDetailComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
