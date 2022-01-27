@@ -35,8 +35,7 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid && this.passwordsMatch()) {
       console.log('Form is valid');
       
-      // TODO: fare chiamata api auth/signup, passando email e password
-      this.authService.signup(this.signupForm.value.username && this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.confirmPassword)
+      this.authService.signup(this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.confirmPassword)
         .subscribe(
           (result) => {
             console.log('User signed up');
@@ -52,10 +51,12 @@ export class SignupComponent implements OnInit {
           }
         );
       
+      
+      // TODO: questo è da cancellare
       let user: User = {
         id: 1,
+        username: 'someone',
         email: this.signupForm.value.email,
-        cognitoUserId: 'something',
         monitoredCoins: [],
         createdAt: new Date(),
         updatedAt: new Date()

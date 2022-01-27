@@ -5,6 +5,7 @@ import {SubjectService} from "../../core/services/subject.service";
 import {CoinMonitoringService} from "../../core/services/coin-monitoring.service";
 import {CoinMonitored} from "../../models/CoinMonitored";
 import {User} from "../../models/User";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +14,6 @@ import {User} from "../../models/User";
   ]
 })
 export class HomepageComponent implements OnInit {
-  loading: boolean = true;
   coinList: Coin[] = [];
   p: number = 1;
   showModal: boolean = false;
@@ -27,8 +27,6 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.loading = false;
-  
     // TODO: fetch the current user every time the page is loaded, so that the data can be filtered correctly
     this.subjectService.getUser().subscribe(user => {
       this.user = user;
@@ -47,21 +45,13 @@ export class HomepageComponent implements OnInit {
         } else {
           this.coinList = data;
         }
-        this.loading = false;
       }
     );
   }
   
+  // TODO: da modificare + rimuovere il tasto getStarted quando ci si logga.. mettere una frase che saluti l'utente
   private removeElementsFromList(data: Coin[], elementsToRemove: CoinMonitored[]) {
-    return data.filter(
-      (coin: Coin) => {
-        return !elementsToRemove.find(
-          (coinToRemove: CoinMonitored) => {
-            return coinToRemove.coinId === coin.id;
-          }
-        );
-      }
-    );
+    return data;
   }
   
   openModalAddCoin(coin: Coin) {
@@ -74,17 +64,23 @@ export class HomepageComponent implements OnInit {
     this.selectedCoinToAddInWatchlist.targetPrice = coinExtraInformation.targetPrice;
     this.selectedCoinToAddInWatchlist.tags = coinExtraInformation.tags;
     
-    this.subjectService.getUser().subscribe(
+    this.subjectService.getUser().pipe(take(1)).subscribe(
       (user: User) => {
         if (user) {
           this.coinMonitoringService.addCoinToWatchlist(user.id, this.selectedCoinToAddInWatchlist).subscribe(
             (data: CoinMonitored) => {
-              user.monitoredCoins.push(data);
+              
+              if (user.monitoredCoins) {
+                user.monitoredCoins.push(data);
+              } else {
+                user.monitoredCoins = [data];
+              }
+              
+              console.log({user});
               this.subjectService.setUser(user); // updating the user in the service so that the data is updated in the component
               this.showModal = false;
             }
           );
-          user.id;
         } else {
           console.log('You must be logged in to add a coin');
         }

@@ -35,14 +35,17 @@ router.post('/signup', (req, res) => {
         res.status(500).json({errorMessage: err.message});
       } else {
         console.log(result);
+
         await prisma.user.create({
           data: {
+            username: username,
             email: email
           }
-        });
-
-        res.json({
-          message: 'User created'
+        }).then(user => {
+          res.status(200).json({message: 'User created'});
+        }).catch(err => {
+          console.log(err);
+          res.status(500).json({errorMessage: err.message});
         });
       }
     });
@@ -50,8 +53,7 @@ router.post('/signup', (req, res) => {
 });
 
 /**
- * TODO: da verificare
- * La response conterra un jwt token.
+ * La response conterrà un jwt token.
  * La documentazione aws dice che 'You can use the tokens to grant your users access to your own server-side resources or to the Amazon API Gateway. Or you can exchange them for temporary AWS credentials to access other AWS services.'
  * Suppongo quindi di non doverci fare nulla, neppure salvarlo in una sessione/localStorage a frontend.
  */
@@ -71,26 +73,77 @@ router.post('/login', async (req, res) => {
   cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: async (result) => {
       console.log(result);
+
       // User logged in.
       // Now we have to retrieve it's data from the database and return it to the client.
-      let user = await prisma.user.findUnique({
-        where: {
-          email: email
+      await prisma.user.findUnique({
+        where: { email: email },
+        include: { monitoredCoins: true }
+      }).then(user => {
+        if (user) {
+          res.json({
+            message: 'User logged in',
+            token: result.getIdToken().getJwtToken(),
+            user
+          });
+        } else {
+          res.status(500).json({errorMessage: 'User not found'});
         }
-      });
-
-      console.log('The user from DB', {user});
-
-      res.json({
-        message: 'User logged in',
-        token: result.getIdToken().getJwtToken(),
-        user
+      }).catch(err => {
+        console.log(err);
+        res.status(500).json({errorMessage: err.message});
       });
     },
     onFailure: (err) => {
       console.log(err);
       res.status(500).json({errorMessage: err.message});
     }
+  });
+});
+
+router.post('/signup-test', async (req, res) => {
+  const { username, email, password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    res.status(500).json({errorMessage: 'Passwords do not match'});
+  } else {
+    await prisma.user.create({
+      data: {
+        username: username,
+        email: email
+      }
+    }).then(user => {
+      res.json({
+        message: 'User created'
+      });
+    }).catch(err => {
+      res.status(500).json({errorMessage: err.message});
+    });
+
+    res.json({
+      message: 'User created'
+    });
+  }
+});
+
+router.post('/login-test', async (req, res) => {
+  const { email } = req.body;
+
+  await prisma.user.findUnique({
+    where: { email: email },
+    include: { monitoredCoins: true }
+  }).then(user => {
+    if (user) {
+      res.json({
+        message: 'User logged in',
+        token: '',
+        user
+      });
+    } else {
+      res.status(500).json({errorMessage: 'User not found'});
+    }
+  }).catch(err => {
+    res.status(500).json({errorMessage: err.message});
   });
 });
 

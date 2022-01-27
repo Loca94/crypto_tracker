@@ -32,4 +32,8 @@ export class CoinMonitoringService {
     return this.http.get<CoinMonitored[]>(`/api/crypto-monitored/get-all/${userId}`);
   }
   
+  getCoinUserIsMonitoring(userId: number, coinName: string): Observable<CoinMonitored> {
+    return this.http.get<CoinMonitored>(`/api/crypto-monitored/get-one/${userId}/${coinName}`);
+  }
+  
 }

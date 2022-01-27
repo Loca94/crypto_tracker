@@ -1,22 +1,25 @@
-<div *ngIf="coinMonitored; else loading;" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div class="border border-gray-300 shadow-sm rounded-md mt-6 md:mt-10 p-2 bg-gray-50">
-    <div class="w-full flex justify-between font-medium text-sm mb-4 p-2">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="border border-gray-300 shadow-sm rounded-md mt-6 md:mt-10 p-2 bg-white">
 
-      <!-- Coin Name -->
-      <div class="text-2xl font-semibold">
-        {{ coinMonitored.name }}
+    <div *ngIf="coinMonitored && coinDetails">
+      <div class="w-full flex justify-between font-medium text-sm mb-4 p-2">
+        <div class="flex space-x-2 items-center">
+          <img class="h-6 w-6 rounded-full" [attr.src]="coinDetails.image.small" [attr.alt]="coinMonitored.name + ' cover image'">
+          <!-- Coin Name -->
+          <div class="text-2xl font-semibold">
+            {{ coinMonitored.name || '-' }}
+          </div>
+        </div>
+        <div>
+          <button (click)="changeGraphVisualization('24h')" [ngClass]="selectedHistoryVisualization === '24h' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">24h</button>
+          <button (click)="changeGraphVisualization('7d')" [ngClass]="selectedHistoryVisualization === '7d' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">7d</button>
+          <button (click)="changeGraphVisualization('30d')" [ngClass]="selectedHistoryVisualization === '30d' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">30d</button>
+        </div>
       </div>
 
-      <div>
-        <button (click)="changeGraphVisualization('24h')" [ngClass]="selectedHistoryVisualization === '24h' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">24h</button>
-        <button (click)="changeGraphVisualization('7d')" [ngClass]="selectedHistoryVisualization === '7d' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">7d</button>
-        <button (click)="changeGraphVisualization('30d')" [ngClass]="selectedHistoryVisualization === '30d' ? 'text-white bg-indigo-600 hover:bg-indigo-500' : 'text-gray-500 hover:text-gray-600 hover:bg-indigo-100'" class="p-2 mr-2 rounded-md transition duration-75 ease-in-out">30d</button>
-      </div>
+
     </div>
+
     <canvas #canvas id="cryptoChart" width="800" height="400"></canvas>
   </div>
 </div>
-
-<ng-template #loading>
-  <app-loading-spinner></app-loading-spinner>
-</ng-template>

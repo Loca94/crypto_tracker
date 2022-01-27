@@ -8,26 +8,25 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectService} from "../../../core/services/subject.service";
 import {CoinMonitoringService} from "../../../core/services/coin-monitoring.service";
 import {CoinMonitored} from "../../../models/CoinMonitored";
+import {User} from "../../../models/User";
 
 
 @Component({
   selector: 'app-coin-detail',
   templateUrl: './coin-detail.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class CoinDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') canvas: ElementRef;
+  user: User;
   chart: Chart;
   selectedHistoryVisualization: '24h' | '7d' | '30d' = '24h';
-  loading: boolean = true;
   coinDetails: any;
-  coinMonitored: CoinMonitored;
-  private coinId: string;
+  coinMonitored: CoinMonitored = new CoinMonitored();
+  private coinName: string;
   private lastDayData: any;
   private lastWeekData: any;
   private lastMonthData: any;
-
 
   constructor(
     private subjectService: SubjectService,
@@ -41,14 +40,17 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    this.retrieveCoinIdFromQueryParams();
+    this.subjectService.getUser().subscribe(user => {
+      this.user = user;
+      this.retrieveCoinIdFromQueryParams();
+    });
   }
   
   private retrieveCoinIdFromQueryParams(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.coinId = params.coinId;
+      this.coinName = params.coinId;
   
-      if (this.coinId)
+      if (this.coinName)
         this.fetchCoinData();
       else
         this.goToHome();
@@ -61,13 +63,12 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
   
   private async fetchCoinData() {
     forkJoin({
-      lastDay: this.cryptoGeckoService.getCoinHistory(this.coinId, '1'),
-      lastWeek: this.cryptoGeckoService.getCoinHistory(this.coinId, '7'),
-      lastMonth: this.cryptoGeckoService.getCoinHistory(this.coinId, '30'),
-      coinDetails: this.cryptoGeckoService.getCoinDetails(this.coinId),
-      coinMonitored: this.subjectService.getMonitoredCoinByName(this.coinId)
+      lastDay: this.cryptoGeckoService.getCoinHistory(this.coinName, '1'),
+      lastWeek: this.cryptoGeckoService.getCoinHistory(this.coinName, '7'),
+      lastMonth: this.cryptoGeckoService.getCoinHistory(this.coinName, '30'),
+      coinDetails: this.cryptoGeckoService.getCoinDetails(this.coinName),
+      coinMonitored: this.coinMonitoringService.getCoinUserIsMonitoring(this.user.id, this.coinName)
     }).subscribe(({lastDay, lastWeek, lastMonth, coinDetails, coinMonitored}) => {
-      this.loading = false;
       this.coinDetails = coinDetails;
       this.coinMonitored = coinMonitored;
       this.initChart(

@@ -2,8 +2,8 @@ import {CoinMonitored} from "./CoinMonitored";
 
 export class User {
   id: number;
+  username: string;
   email: string;
-  cognitoUserId: string;
   monitoredCoins: CoinMonitored[];
   createdAt: Date;
   updatedAt: Date;

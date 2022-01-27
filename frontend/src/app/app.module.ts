@@ -12,7 +12,6 @@ import { HttpClientModule } from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MyCryptoComponent } from './pages/my-crypto/my-crypto.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { CoinDetailComponent } from './pages/my-crypto/coin-detail/coin-detail.component';
 import { HistoryChartComponent } from './shared/components/history-chart/history-chart.component';
 import { NgChartsModule } from "ng2-charts";
@@ -28,7 +27,6 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     HomepageComponent,
     NotFoundComponent,
     MyCryptoComponent,
-    LoadingSpinnerComponent,
     CoinDetailComponent,
     HistoryChartComponent,
     ModalComponent,

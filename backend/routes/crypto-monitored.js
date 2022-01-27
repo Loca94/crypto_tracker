@@ -11,6 +11,7 @@ router.get('/get-all/:userId', async (req, res) => {
     where: {
       userId: Number(userId),
     },
+    include: { tags: true },
   })
   .then(coinsInWatchlist => {
     res.json(coinsInWatchlist);
@@ -21,19 +22,21 @@ router.get('/get-all/:userId', async (req, res) => {
 });
 
 
-router.get('/get-one/:coinId', async (req, res) => {
-  const coinId = req.params.coinId;
+router.get('/get-one/:userId/:coinId', async (req, res) => {
+  const { coinId, userId } = req.params;
 
-  prisma.coinMonitored.findOne({
+  prisma.coinMonitored.findFirst({
     where: {
-      id: Number(coinId),
+      coinId: coinId,
+      userId: Number(userId),
     },
+    include: { tags: true },
   })
   .then(coinInWatchlist => {
     res.json(coinInWatchlist);
   })
   .catch(err => {
-    res.json(err);
+    res.status(404).json(err);
   });
 });
 

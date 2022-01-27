@@ -12,13 +12,10 @@ export class SubjectService {
   constructor() { }
   
   setUser(user: User): void {
+    console.log('setUser', user);
     this.userSubject.next(user);
   }
   getUser(): Observable<User> {
     return this.userSubject.asObservable();
-  }
-  
-  async getMonitoredCoinByName(coinName: string): Promise<CoinMonitored> {
-    return this.userSubject.getValue().monitoredCoins.find(coin => coin.name === coinName);
   }
 }

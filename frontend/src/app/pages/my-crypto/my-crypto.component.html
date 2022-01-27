@@ -10,16 +10,31 @@
 
         <!-- Coin card -->
         <div *ngFor="let coin of coinsInWatchList | paginate: { itemsPerPage: 9, currentPage: p }" class="pt-6">
-          <div class="flow-root bg-white shadow-sm hover:shadow-md border border-gray-200 rounded-lg px-6 pb-8 transition duration-150 ease-in-out">
+          <div class="h-full flow-root bg-white shadow-sm hover:shadow-md border border-gray-200 rounded-lg p-6 transition duration-150 ease-in-out">
             <div>
-              <h3 class="mt-8 text-lg font-medium text-gray-900 tracking-tight truncate">{{ coin.name }}</h3>
-              <p class="mt-5 text-base text-gray-500">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <div class="flex space-x-3">
+
+                <!-- Conterrà un'immagine del logo della valuta -->
+                <div class="h-8 w-8 mt-1 rounded-full border border-gray-400 bg-gray-200"></div>
+
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900 tracking-tight truncate">{{ coin.name }}</h3>
+                  <p class="text-sm text-gray-500 truncate">
+                    <span class="font-medium text-gray-600">Alias:</span>
+                    <span class="ml-1">{{ coin.alias }}</span>
+                  </p>
+                </div>
+
+              </div>
+              <p class="mt-6 text-base text-gray-500 flex flex-wrap space-x-2">
+                <span *ngFor="let tag of coin.tags" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-800">
+                  {{ '#' + tag.name }}
+                </span>
               </p>
-              <div class="flex space-x-4 mt-8">
+              <div class="flex space-x-4 mt-6">
 
                 <!-- Coin details -->
-                <button *ngIf="subjectService.getUser() | async" (click)="goToCoinDetailPage(coin)" type="button" class="w-full flex justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                <button *ngIf="subjectService.getUser() | async" (click)="goToCoinDetailPage(coin)" type="button" class="truncate w-full flex justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
                   <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                     <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4m-2-2v4" />
