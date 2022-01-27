@@ -7,6 +7,7 @@ import {MyCryptoComponent} from "./pages/my-crypto/my-crypto.component";
 import {Coin} from "./models/Coin";
 import {CoinDetailComponent} from "./pages/my-crypto/coin-detail/coin-detail.component";
 import {AuthGuard} from "./core/guards/auth.guard";
+import {VerifyAccountComponent} from "./pages/verify-account/verify-account.component";
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'verify-account',
+    component: VerifyAccountComponent
   },
   {
     path: '**',

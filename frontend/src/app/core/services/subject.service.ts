@@ -12,7 +12,6 @@ export class SubjectService {
   constructor() { }
   
   setUser(user: User): void {
-    console.log('setUser', user);
     this.userSubject.next(user);
   }
   getUser(): Observable<User> {

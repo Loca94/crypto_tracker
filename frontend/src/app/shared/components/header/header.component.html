@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <header class="bg-gray-50 border-b border-gray-200">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
-    <div class="w-full py-4 flex items-center justify-between border-b border-blue-500 lg:border-none">
+    <div class="w-full py-4 flex items-center justify-between border-b border-gray-200 lg:border-none">
       <div class="flex items-center">
         <a routerLink="/home">
           <span class="sr-only">Crypto tracker</span>
@@ -22,10 +22,10 @@
       </div>
     </div>
     <div class="py-4 flex flex-wrap justify-center space-x-6 lg:hidden">
-      <a routerLink="/home" class="text-base font-medium text-white hover:text-blue-50">
+      <a routerLink="/home" class="text-base font-medium text-gray-800 hover:text-gray-700">
         Homepage
       </a>
-      <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-blue-50">
+      <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-gray-800 hover:text-gray-700">
         My crypto
       </a>
     </div>

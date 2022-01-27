@@ -1,14 +1,34 @@
-Per tirare su il BE va fatto
 
-npm install
-npx prisma generate => cosa fa? builda il client di prisma?
-npx prisma migrate dev
+# Crypto Tracker - Backend
 
-se si vogliono vedere i record nel database, inserire il seguente comando
-pmx prisma studio
-
-con un progetto nuovo, lanciare
-npx prisma migrate dev --name initial-migration
+Qui di seguito delle brevi indicazioni sul come avviare il progetto in locale.
 
 
-ricordarmi di modificare l'api signup-test
+
+
+## Elenco dei comandi da terminale
+
+#### Installare le librerie
+
+```http
+  npm install
+```
+
+#### Inizializzare il database SQLite
+
+```http
+  npx prisma migrate dev --name initial-migration
+```
+
+#### Visualizzare il database sul browser
+
+```http
+  npx prisma studio
+```
+
+
+## Tech Stack
+
+
+**Server:** Node, Express, Prisma
+

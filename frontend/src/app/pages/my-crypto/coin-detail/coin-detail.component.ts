@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { CryptoGeckoService } from "../../../core/services/crypto-gecko.service";
 import { forkJoin } from "rxjs";
 import {Chart} from "chart.js";
@@ -16,7 +16,7 @@ import {User} from "../../../models/User";
   templateUrl: './coin-detail.component.html',
   styles: []
 })
-export class CoinDetailComponent implements OnInit, AfterViewInit {
+export class CoinDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef;
   user: User;
   chart: Chart;
@@ -135,5 +135,9 @@ export class CoinDetailComponent implements OnInit, AfterViewInit {
         return this.lastMonthData;
     }
     return undefined;
+  }
+  
+  ngOnDestroy(): void {
+    this.chart.destroy()
   }
 }

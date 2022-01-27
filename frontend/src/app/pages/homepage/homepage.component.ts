@@ -18,7 +18,7 @@ export class HomepageComponent implements OnInit {
   p: number = 1;
   showModal: boolean = false;
   selectedCoinToAddInWatchlist: Coin;
-  private user: User;
+  user: User;
 
   constructor(
     private cryptoGeckoService: CryptoGeckoService,
@@ -27,7 +27,6 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    // TODO: fetch the current user every time the page is loaded, so that the data can be filtered correctly
     this.subjectService.getUser().subscribe(user => {
       this.user = user;
       
@@ -49,9 +48,8 @@ export class HomepageComponent implements OnInit {
     );
   }
   
-  // TODO: da modificare + rimuovere il tasto getStarted quando ci si logga.. mettere una frase che saluti l'utente
   private removeElementsFromList(data: Coin[], elementsToRemove: CoinMonitored[]) {
-    return data;
+    return data.filter(({ id: id1 }) => !elementsToRemove.some(({ coinId: id2 }) => id2 === id1))
   }
   
   openModalAddCoin(coin: Coin) {

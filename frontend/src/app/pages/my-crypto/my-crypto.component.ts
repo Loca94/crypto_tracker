@@ -28,13 +28,8 @@ export class MyCryptoComponent implements OnInit {
 
   ngOnInit(): void {
     this.subjectService.getUser().subscribe(user => {
-      if (user) {
-        this.userId = user.id;
-        this.updateCoinsInWatchlist();
-      } else {
-        // TODO: sarebbe da usare delle guardie. vediamo se ho tempo di implementarle
-        this.router.navigate(['/login']);
-      }
+      this.userId = user.id;
+      this.updateCoinsInWatchlist();
     });
   }
   

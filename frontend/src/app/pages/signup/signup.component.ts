@@ -17,8 +17,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
-    private subjectService: SubjectService
+    private authService: AuthService
   ) { }
 
   signupForm = new FormGroup({
@@ -40,7 +39,7 @@ export class SignupComponent implements OnInit {
           (result) => {
             console.log('User signed up');
             this.showErrorMessage = false;
-            this.goToLogin();
+            this.goToVerifyAccountPage();
           },
           (error) => {
             console.log('Error signing up', {error});
@@ -48,20 +47,6 @@ export class SignupComponent implements OnInit {
             this.errorMessage = error.error.errorMessage ? error.error.errorMessage : error.error;
           }
         );
-      
-      
-      // TODO: questo è da cancellare
-      let user: User = {
-        id: 1,
-        username: 'someone',
-        email: this.signupForm.value.email,
-        monitoredCoins: [],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      
-      this.subjectService.setUser(user);
-      console.log('ho settato lo user nel service')
     } else {
       console.log('Form is invalid');
     }
@@ -71,7 +56,7 @@ export class SignupComponent implements OnInit {
     return this.signupForm.value.password === this.signupForm.value.confirmPassword;
   }
   
-  private goToLogin() {
-    this.router.navigate(['/login']);
+  private goToVerifyAccountPage() {
+    this.router.navigate(['/verify-account']);
   }
 }

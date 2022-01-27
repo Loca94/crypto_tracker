@@ -17,6 +17,7 @@ import { HistoryChartComponent } from './shared/components/history-chart/history
 import { NgChartsModule } from "ng2-charts";
 import {NgxPaginationModule} from "ngx-pagination";
 import { ModalComponent } from './shared/components/modal/modal.component';
+import { VerifyAccountComponent } from './pages/verify-account/verify-account.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     CoinDetailComponent,
     HistoryChartComponent,
     ModalComponent,
+    VerifyAccountComponent,
   ],
   imports: [
     BrowserModule,

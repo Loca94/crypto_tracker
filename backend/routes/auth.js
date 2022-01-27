@@ -101,6 +101,25 @@ router.post('/login', async (req, res) => {
   });
 });
 
+router.post('/verify-account', async (req, res) => {
+  const { email, verificationCode } = req.body;
+
+  const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+    Username: email,
+    Pool: userPool
+  });
+
+  cognitoUser.confirmRegistration(verificationCode, true, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({errorMessage: err.message});
+    } else {
+      console.log(result);
+      res.status(200).json({message: 'User verified'});
+    }
+  });
+});
+
 router.post('/signup-test', async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
 

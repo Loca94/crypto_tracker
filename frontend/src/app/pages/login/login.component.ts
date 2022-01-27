@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
         (res) => {
-          console.log({res});
+          console.log('Questo è il token jwt ritornato:' + res.token);
           this.showErrorMessage = false;
           this.subjectService.setUser(res.user);
           this.loginForm.reset();
