@@ -1,0 +1,74 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="py-6 md:py-10">
+    <h1 class="text-3xl mb-4 font-bold text-gray-800">
+      My crypto
+    </h1>
+
+    <!-- My Crypto Cards -->
+    <div *ngIf="coinsInWatchList && coinsInWatchList.length > 0; else emptyWatchlist">
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Coin card -->
+        <div *ngFor="let coin of coinsInWatchList | paginate: { itemsPerPage: 9, currentPage: p }" class="pt-6">
+          <div class="h-full flow-root bg-white shadow-sm hover:shadow-md border border-gray-200 rounded-lg p-6 transition duration-150 ease-in-out">
+            <div>
+              <div class="flex space-x-3">
+
+                <!-- Conterrà un'immagine del logo della valuta -->
+                <div class="h-8 w-8 mt-1 rounded-full border border-gray-300 bg-blue-200"></div>
+
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900 tracking-tight truncate">{{ coin.name }}</h3>
+                  <p class="text-sm text-gray-500 truncate">
+                    <span class="font-medium text-gray-600">Alias:</span>
+                    <span class="ml-1">{{ coin.alias }}</span>
+                  </p>
+                </div>
+
+              </div>
+              <p class="mt-6 text-base text-gray-500 flex flex-wrap space-x-2">
+                <span *ngFor="let tag of coin.tags" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-800">
+                  {{ '#' + tag.name }}
+                </span>
+              </p>
+              <div class="flex space-x-4 mt-6">
+
+                <!-- Coin details -->
+                <button *ngIf="subjectService.getUser() | async" (click)="goToCoinDetailPage(coin)" type="button" class="truncate w-full flex justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                    <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11h4m-2-2v4" />
+                  </svg>
+                  View Details
+                </button>
+
+                <!-- Remove coin from user watchlist -->
+                <button *ngIf="subjectService.getUser() | async" (click)="removeCoinFromWatchList(coin)" type="button" class="w-full flex justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 hover:text-red-500 bg-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-3 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                  Delete
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="coinsInWatchList && coinsInWatchList.length > 9" class="mt-16">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+    <ng-template #emptyWatchlist>
+      <div class="mt-16">
+        <p class="text-gray-500 text-center">
+          You don't have any coins in your watchlist.
+        </p>
+      </div>
+    </ng-template>
+
+
+  </div>
+</div>
