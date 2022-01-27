@@ -46,8 +46,6 @@ export class SignupComponent implements OnInit {
             console.log('Error signing up', {error});
             this.showErrorMessage = true;
             this.errorMessage = error.error.errorMessage ? error.error.errorMessage : error.error;
-            // TODO: gestire errori
-            // l'errore che ricevo è: InvalidParameterException: Attributes did not conform to the schema: name: The attribute is required
           }
         );
       

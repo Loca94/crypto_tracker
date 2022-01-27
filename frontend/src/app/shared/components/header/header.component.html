@@ -1,31 +1,31 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<header class="bg-indigo-600">
+<header class="bg-gray-50 border-b border-gray-200">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
-    <div class="w-full py-4 flex items-center justify-between border-b border-indigo-500 lg:border-none">
+    <div class="w-full py-4 flex items-center justify-between border-b border-blue-500 lg:border-none">
       <div class="flex items-center">
         <a routerLink="/home">
           <span class="sr-only">Crypto tracker</span>
           <img class="h-12 w-auto" src="assets/doge-boss-logo.png" alt="">
         </a>
         <div class="hidden ml-10 space-x-8 lg:block">
-          <a routerLink="/home" class="text-base font-medium text-white hover:text-indigo-50">
+          <a routerLink="/home" class="text-base font-medium text-gray-800 hover:text-gray-700">
             Homepage
           </a>
-          <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
+          <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-gray-800 hover:text-gray-700">
             My crypto
           </a>
         </div>
       </div>
       <div class="ml-10 space-x-4">
-        <a routerLink="/login" class="inline-block bg-indigo-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Login</a>
-        <a routerLink="/signup" class="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-indigo-600 hover:bg-indigo-50">Signup</a>
+        <a routerLink="/login" class="inline-block bg-white py-2 px-4 border border-gray-300 rounded-md text-base font-medium text-blue-600 hover:bg-gray-50">Login</a>
+        <a routerLink="/signup" class="inline-block bg-blue-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Signup</a>
       </div>
     </div>
     <div class="py-4 flex flex-wrap justify-center space-x-6 lg:hidden">
-      <a routerLink="/home" class="text-base font-medium text-white hover:text-indigo-50">
+      <a routerLink="/home" class="text-base font-medium text-white hover:text-blue-50">
         Homepage
       </a>
-      <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-indigo-50">
+      <a *ngIf="subjectService.getUser() | async" routerLink="/my-crypto" class="text-base font-medium text-white hover:text-blue-50">
         My crypto
       </a>
     </div>
