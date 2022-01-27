@@ -74,7 +74,6 @@ export class HomepageComponent implements OnInit {
                 user.monitoredCoins = [data];
               }
               
-              console.log({user});
               this.subjectService.setUser(user); // updating the user in the service so that the data is updated in the component
               this.showModal = false;
             }
