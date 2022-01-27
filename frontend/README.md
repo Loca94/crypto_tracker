@@ -6,13 +6,21 @@ Qui di seguito delle brevi indicazioni sul come avviare il progetto in locale.
 
 ## Elenco dei comandi da terminale
 
+In ordine:
+
 #### Installare le librerie
 
 ```http
   npm install
 ```
 
-#### Avviare il frontend
+#### Buildare il progetto
+
+```http
+  npm run build
+```
+
+#### Avviare il progetto
 
 ```http
   npm run start
@@ -22,7 +30,7 @@ oppure
 ```http
   ng serve
 ```
-il sito sarà raggiungibile all'indirizzo [http://localhost:4200](http://localhost:4200)
+Il sito sarà raggiungibile all'indirizzo [http://localhost:4200](http://localhost:4200)
 
 
 ## Tech Stack

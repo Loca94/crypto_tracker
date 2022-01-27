@@ -46,6 +46,7 @@ export class ModalComponent implements OnInit {
         targetPrice: this.targetPrice,
         tags: this.tags.split(',').map(tag => tag.trim())
       });
+      this.resetValues();
       this.showModal = false;
     }
   }
